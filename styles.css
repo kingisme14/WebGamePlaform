@@ -1,0 +1,196 @@
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+html, body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    background-color: #f0f0f0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: #1abff1;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav {
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+main {
+    padding: 20px;
+    flex: 1;
+}
+
+section {
+    background-color: white;
+    margin: 10px 0;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.video-player {
+    margin-bottom: 20px;
+}
+
+.video-thumbnails {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.thumbnail {
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* 添加過渡效果 */
+}
+
+.thumbnail img {
+    max-width: 100%;
+    border-radius: 5px;
+    transition: transform 0.3s ease; /* 圖片過渡效果 */
+}
+
+.thumbnail p {
+    margin: 10px 0 0;
+}
+
+/* 當用戶懸停在縮圖上時，增加放大效果和陰影效果 */
+.thumbnail:hover {
+    transform: translateY(-5px); /* 上移一點 */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* 增加陰影效果 */
+}
+
+.thumbnail img:hover {
+    transform: scale(1.05); /* 圖片放大一點 */
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .video-thumbnails {
+        grid-template-columns: repeat(2, 1fr); /* 平板尺寸顯示兩欄 */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .video-thumbnails {
+        grid-template-columns: 1fr; /* 手機尺寸顯示單欄 */
+    }
+}
+/* 原本的 CSS 保持不變，這裡新增一些樣式來設置按鈕的樣式 */
+.game-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+button {
+    background-color: #1abff1;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #1298d1; /* 懸停時改變顏色 */
+}
+
+iframe {
+    flex: 1;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 避免按鈕和 iframe 接觸過近 */
+.game-navigation button {
+    margin: 0 20px;
+}
+/* 原本的 CSS 保持不變，這裡新增一些動畫效果 */
+.game-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+button {
+    background-color: #1abff1;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #1298d1; /* 懸停時改變顏色 */
+}
+
+iframe {
+    flex: 1;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    opacity: 1;  /* 預設完全顯示 */
+    transition: opacity 0.5s ease, transform 0.5s ease; /* 淡入淡出和平移動畫 */
+    transform: translateX(0); /* 初始位置 */
+}
+
+/* 避免按鈕和 iframe 接觸過近 */
+.game-navigation button {
+    margin: 0 20px;
+}
+
