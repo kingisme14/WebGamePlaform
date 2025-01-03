@@ -1,196 +1,239 @@
+/* Reset 基本樣式 */
 * {
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
-html, body {
-    padding: 0;
     margin: 0;
-    height: 100%;
-    background-color: #f0f0f0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0;
-    display: flex;
-    flex-direction: column;
+    background: url('./images/background.webp');
+    font-family: Arial, sans-serif;
+    background-color: #1e1e1e;
+    color: #fff;
+    line-height: 1.6;
 }
 
-header {
-    background-color: #1abff1;
-    color: white;
-    padding: 10px 20px;
+/* 頂部導航列 */
+.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-header h1 {
-    margin: 0;
-}
-
-nav {
     background-color: #333;
-    color: white;
-    padding: 15px;
-    text-align: center;
-}
-
-nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-}
-
-nav ul li {
-    margin-left: 20px;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-}
-
-main {
-    padding: 20px;
-    flex: 1;
-}
-
-section {
-    background-color: white;
-    margin: 10px 0;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.video-player {
-    margin-bottom: 20px;
-}
-
-.video-thumbnails {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-}
-
-.thumbnail {
-    background-color: white;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* 添加過渡效果 */
-}
-
-.thumbnail img {
-    max-width: 100%;
-    border-radius: 5px;
-    transition: transform 0.3s ease; /* 圖片過渡效果 */
-}
-
-.thumbnail p {
-    margin: 10px 0 0;
-}
-
-/* 當用戶懸停在縮圖上時，增加放大效果和陰影效果 */
-.thumbnail:hover {
-    transform: translateY(-5px); /* 上移一點 */
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* 增加陰影效果 */
-}
-
-.thumbnail img:hover {
-    transform: scale(1.05); /* 圖片放大一點 */
-}
-
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px;
+    padding: 10px 20px;
     width: 100%;
 }
 
-@media screen and (max-width: 768px) {
-    .video-thumbnails {
-        grid-template-columns: repeat(2, 1fr); /* 平板尺寸顯示兩欄 */
+    .navbar .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: #ffcc00;
     }
+
+    .navbar .nav-links a {
+        color: #fff;
+        text-decoration: none;
+        margin-left: 15px;
+        font-size: 16px;
+    }
+
+        .navbar .nav-links a:hover {
+            color: #ffcc00;
+        }
+
+    .navbar .nav-links .login {
+        font-weight: bold;
+    }
+
+/* 背景圖片區域 */
+.background-banner {
+    height: 200px;
+    background: url('https://via.placeholder.com/1280x200') no-repeat center center/cover;
+    margin: 0 auto;
 }
 
-@media screen and (max-width: 480px) {
-    .video-thumbnails {
-        grid-template-columns: 1fr; /* 手機尺寸顯示單欄 */
-    }
+/* 主容器區域 */
+.main-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+    max-width: 1280px;
 }
-/* 原本的 CSS 保持不變，這裡新增一些樣式來設置按鈕的樣式 */
+
+/* 廣告區域 */
+.ad-banner {
+    width: 160px;
+    background-color: #2a2a2a;
+    padding: 10px;
+    margin: 0 10px;
+    color: #aaa;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+    .ad-banner img {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+/* 遊戲展示區 */
+.featured-games {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #1e1e1e;
+    max-width: 960px;
+    margin: 0 auto; /* 置中 featured-games 區域 */
+}
+
+    .featured-games h2 {
+        font-size: 28px;
+        margin-bottom: 20px;
+        text-align: center; /* 讓標題也置中 */
+    }
+
+    .featured-games .filter-options {
+        margin-bottom: 20px;
+        display: flex;
+        gap: 15px;
+        font-size: 14px;
+        justify-content: center; /* 置中过濾選項 */
+    }
+
+    .featured-games select {
+        padding: 5px;
+        background-color: #333;
+        color: #fff;
+        border: 1px solid #555;
+        border-radius: 4px;
+    }
+
+/* 遊戲格子區域 */
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    justify-content: center; /* 遊戲格子置中 */
+}
+
+.game-item {
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .game-item a {
+        text-decoration: none; /* 去除底線 */
+    }
+
+    .game-item img {
+        width: 100%;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .game-item h3 {
+        font-size: 18px;
+        margin: 10px 0;
+        color: #ffcc00;
+    }
+
+    .game-item p {
+        font-size: 14px;
+        color: #aaa;
+    }
+
+    .game-item:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+/* 遊戲播放器區域 */
+.game-player {
+    background-color: #2a2a2a; /* Dark background for the player */
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 20px 0; /* Add margin for spacing */
+}
+
+/* 按鈕容器 */
 .game-navigation {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 10px 0;
 }
 
-button {
-    background-color: #1abff1;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 18px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    /* 左右按鈕 */
+    .game-navigation button {
+        background-color: #333;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        font-size: 20px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+        /* 按鈕的 hover 效果 */
+        .game-navigation button:hover {
+            background-color: #ffcc00;
+            transform: scale(1.1);
+        }
+
+/* iFrame 外觀 */
+#game-frame {
+    border-radius: 8px;
+    border: 2px solid #444;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Add shadow to the iframe */
+    transition: transform 0.3s ease;
 }
 
-button:hover {
-    background-color: #1298d1; /* 懸停時改變顏色 */
+    #game-frame:hover {
+        transform: scale(1.02); /* Slight zoom effect on hover */
+    }
+/* 美化頁尾 */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 30px 0;
+    text-align: center;
+    font-size: 14px;
+    border-top: 2px solid #444;
 }
 
-iframe {
-    flex: 1;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+    footer .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 
-/* 避免按鈕和 iframe 接觸過近 */
-.game-navigation button {
-    margin: 0 20px;
-}
-/* 原本的 CSS 保持不變，這裡新增一些動畫效果 */
-.game-navigation {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-}
+    footer p {
+        margin: 10px 0;
+    }
 
-button {
-    background-color: #1abff1;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 18px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
+    footer a {
+        color: #ffcc00;
+        text-decoration: none;
+        margin: 0 10px;
+    }
 
-button:hover {
-    background-color: #1298d1; /* 懸停時改變顏色 */
-}
+        footer a:hover {
+            text-decoration: underline;
+        }
 
-iframe {
-    flex: 1;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    opacity: 1;  /* 預設完全顯示 */
-    transition: opacity 0.5s ease, transform 0.5s ease; /* 淡入淡出和平移動畫 */
-    transform: translateX(0); /* 初始位置 */
-}
+    footer .social-links a {
+        margin: 0 15px;
+        font-size: 18px;
+    }
 
-/* 避免按鈕和 iframe 接觸過近 */
-.game-navigation button {
-    margin: 0 20px;
-}
-
+        footer .social-links a:hover {
+            color: #ffcc00;
+        }

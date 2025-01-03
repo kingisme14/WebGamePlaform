@@ -1,16 +1,9 @@
-if (top !== self) {
-    // 如果頁面被嵌入到 iframe 中，則強制退出
-    top.location = self.location;
-}
-document.addEventListener('DOMContentLoaded', (event) => {
-    console.log('Document is fully loaded and parsed');
-});
 // 定義遊戲的 URL 列表
 const gameUrls = [
     "https://kingisme14.github.io/webTopGame/",
-    "http://www.gamesmomo.com/a.asp?id=5404",  // 假設第二個遊戲的 URL
+    "http://www.gamesmomo.com/a.asp?id=5404",
     "https://kuioo.tw/g/play/Squid-game-io/",
-    "https://www.youtube.com/embed/7EVofmoN0K8?si=7VeUzfUIWLeZvt3C"  // 假設第三個遊戲的 URL
+    "https://www.youtube.com/embed/7EVofmoN0K8?si=7VeUzfUIWLeZvt3C"
 ];
 
 let currentGameIndex = 0;  // 當前顯示的遊戲索引
@@ -18,6 +11,11 @@ let currentGameIndex = 0;  // 當前顯示的遊戲索引
 const iframe = document.getElementById('game-frame');
 const prevButton = document.querySelector('.prev-btn');
 const nextButton = document.querySelector('.next-btn');
+
+// 確保按鈕已經正確獲取
+if (!prevButton || !nextButton) {
+    console.error("無法找到上一個或下一個按鈕，請檢查 HTML 中的按鈕 class 是否正確。");
+}
 
 // 切換遊戲的函數
 function switchGame(newIndex) {
@@ -28,12 +26,12 @@ function switchGame(newIndex) {
         // 更新 iframe 的 src
         currentGameIndex = newIndex;
         iframe.src = gameUrls[currentGameIndex];
-        
+
         // 等待動畫結束後再顯示新遊戲
         setTimeout(() => {
             iframe.style.opacity = 1;  // 讓 iframe 淡入
             iframe.style.transform = 'translateX(0)';  // 恢復初始位置
-        }, 50);  // 稍微延遲，避免過快顯示
+        }, 300);  // 這裡稍微延遲，避免過快顯示
     }, 500);  // 過渡時間，與 CSS 動畫時間相同
 }
 
