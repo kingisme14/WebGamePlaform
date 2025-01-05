@@ -17,7 +17,7 @@ footerContent.appendChild(p2);
 const p3 = document.createElement('p');
 p3.innerHTML = 'Follow us on: ';
 
-// 創建並添加各個社交媒體的 <a> 標籤
+// 創建並添加各個社交媒體的 <a> 標籤------------------------------------------
 const facebookLink = document.createElement('a');
 facebookLink.href = 'https://www.facebook.com';
 facebookLink.id = 'facebook-link';

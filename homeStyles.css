@@ -6,13 +6,21 @@
 }
 
 body {
-    background: url('./images/background.webp');
+    background: url('');
     font-family: Arial, sans-serif;
     background-color: #1e1e1e;
     color: #fff;
     line-height: 1.6;
+    background-repeat: no-repeat; /* 禁止重複 */
+    background-size: cover; /* 覆蓋整個背景區域 */
+    background-position: center; /* 置中顯示背景 */
+    background-size: 120%; /* 將圖片縮放為容器的 80% */
 }
-
+@media screen and (max-width: 768px) {
+    body {
+        background-size: contain; /* 手機或平板縮小圖片顯示 */
+    }
+}
 /* 頂部導航列 */
 .navbar {
     display: flex;
@@ -81,8 +89,9 @@ body {
     padding: 20px;
     background-color: #1e1e1e;
     max-width: 960px;
-    margin: 0 auto; /* 置中 featured-games 區域 */
+    margin: 20px auto 0; /* 上方增加 20px，其他保持置中 */
 }
+
 
     .featured-games h2 {
         font-size: 28px;
@@ -150,6 +159,17 @@ body {
     }
 /* 遊戲播放器區域 */
 .game-player {
+    background: url('./images/background6.webp');
+    font-family: Arial, sans-serif;
+    color: #fff;
+    line-height: 1.6;
+    background-repeat: no-repeat; /* 禁止重複 */
+    background-size: cover; /* 覆蓋整個背景區域 */
+    background-position: center; /* 置中顯示背景 */
+    background-size: 100%; /* 將圖片縮放為容器的 80% */
+    background-position: center -150px; /* 往上移動 50px */
+
+
     background-color: #2a2a2a; /* Dark background for the player */
     border-radius: 8px;
     padding: 15px;
@@ -166,7 +186,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
+    width: 1080px;
     max-width: 1200px;
     margin: 10px 0;
 }
@@ -191,6 +211,7 @@ body {
 
 /* iFrame 外觀 */
 #game-frame {
+    margin: 20px auto 0; /* 上方增加 20px，其他保持置中 */
     border-radius: 8px;
     border: 2px solid #444;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Add shadow to the iframe */

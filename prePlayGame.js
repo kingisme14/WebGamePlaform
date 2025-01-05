@@ -1,7 +1,7 @@
 // 定義遊戲的 URL 列表
 const gameUrls = [
     "https://kingisme14.github.io/webTopGame/",
-    "http://www.gamesmomo.com/a.asp?id=5404",
+    "https://kusogamemaker.github.io/FrogFiftyKana/",
     "https://kuioo.tw/g/play/Squid-game-io/",
     "https://www.youtube.com/embed/7EVofmoN0K8?si=7VeUzfUIWLeZvt3C"
 ];
