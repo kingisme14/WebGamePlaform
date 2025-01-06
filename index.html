@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>kusokusogame</title>
     <link rel="stylesheet" href="./Css/homeStyles.css">
-    
-   
+    <!-- Yandex.RTB -->
+    <script>window.yaContextCb = window.yaContextCb || []</script>
+    <script src="https://yandex.ru/ads/system/context.js" async></script>
+
 </head>
 <body>
     <!-- 頂部導航列 -->
@@ -117,11 +119,20 @@
             </div>
         </div>
     </div>
-    
-     <!-- 構建頁尾 -->
+
+    <!-- 構建頁尾 -->
     <script src="./Js/loadFooterInfo.js"></script>
 
     <script src="./Js/prePlayGame.js"></script>
-    
+    <!-- Yandex.RTB R-A-13593653-1 -->
+    <script>
+        window.yaContextCb.push(() => {
+            Ya.Context.AdvManager.render({
+                "blockId": "R-A-13593653-1",
+                "type": "floorAd",
+                "platform": "touch"
+            })
+        })
+    </script>
 </body>
 </html>
