@@ -84,7 +84,7 @@ body {
     }
 
 /* 遊戲展示區 */
-.featured-games {
+.featured-games, .featured-tools{
     flex-grow: 1;
     padding: 20px;
     background-color: #1e1e1e;
@@ -93,13 +93,13 @@ body {
 }
 
 
-    .featured-games h2 {
+    .featured-games h2,.featured-tools h2 {
         font-size: 28px;
         margin-bottom: 20px;
         text-align: center; /* 讓標題也置中 */
     }
 
-    .featured-games .filter-options {
+    .featured-games .filter-options,.featured-tools .filter-options {
         margin-bottom: 20px;
         display: flex;
         gap: 15px;
@@ -116,14 +116,14 @@ body {
     }
 
 /* 遊戲格子區域 */
-.game-grid {
+.game-grid, .tool-grid{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
     justify-content: center; /* 遊戲格子置中 */
 }
 
-.game-item {
+.game-item, .tool-item{
     background-color: #2a2a2a;
     border: 1px solid #444;
     border-radius: 8px;
@@ -258,3 +258,25 @@ footer {
         footer .social-links a:hover {
             color: #ffcc00;
         }
+
+        /* 設置按鈕的基本樣式 */
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+button.active {
+    background-color: #007BFF;
+    color: white;
+}
+
+/* 預設隱藏所有section，除了 game-player 和 featured-games */
+.featured-games {
+    display: block;  /* 預設顯示 featured-games */
+}
+
+.featured-tools {
+    display: none;   /* 預設隱藏 featured-tools */
+}
+
