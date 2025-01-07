@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encoding Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 50%;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        textarea, select, button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        #output {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            word-wrap: break-word;
+        }
+
+        #reverseContainer {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Encoding Converter</h1>
+        <textarea id="inputText" placeholder="Enter text to convert..." rows="6"></textarea>
+
+        <select id="encodingType">
+            <option value="utf8">UTF-8</option>
+            <option value="base64">Base64</option>
+            <option value="hex">Hex</option>
+            <option value="url">URL Encoding</option>
+        </select>
+
+        <button onclick="convertEncoding()">Convert</button>
+
+        <!-- Reverse Conversion Section -->
+        <div id="reverseContainer">
+            <h2>Reverse Convert</h2>
+            <select id="reverseEncodingType">
+                <option value="utf8">UTF-8</option>
+                <option value="base64">Base64</option>
+                <option value="hex">Hex</option>
+                <option value="url">URL Encoding</option>
+            </select>
+            <button onclick="reverseConvert()">Reverse Convert</button>
+        </div>
+
+        <div id="output"></div>
+    </div>
+
+    <script>
+        // Convert input text based on selected encoding type
+        function convertEncoding() {
+            const inputText = document.getElementById('inputText').value;
+            const encodingType = document.getElementById('encodingType').value;
+            let outputText = '';
+
+            switch (encodingType) {
+                case 'utf8':
+                    outputText = decodeURIComponent(escape(inputText)); // Decode UTF-8 (if it was encoded before)
+                    break;
+                case 'base64':
+                    outputText = btoa(inputText); // Base64 encode
+                    break;
+                case 'hex':
+                    outputText = stringToHex(inputText); // Convert to Hex
+                    break;
+                case 'url':
+                    outputText = encodeURIComponent(inputText); // URL encode
+                    break;
+                default:
+                    outputText = 'Invalid encoding type.';
+            }
+
+            document.getElementById('output').textContent = outputText;
+        }
+
+        // Reverse convert input text based on selected encoding type
+        function reverseConvert() {
+            const inputText = document.getElementById('inputText').value;
+            const reverseEncodingType = document.getElementById('reverseEncodingType').value;
+            let outputText = '';
+
+            switch (reverseEncodingType) {
+                case 'utf8':
+                    outputText = unescape(encodeURIComponent(inputText)); // Reverse UTF-8 encoding
+                    break;
+                case 'base64':
+                    outputText = atob(inputText); // Base64 decode
+                    break;
+                case 'hex':
+                    outputText = hexToString(inputText); // Convert Hex to String
+                    break;
+                case 'url':
+                    outputText = decodeURIComponent(inputText); // URL decode
+                    break;
+                default:
+                    outputText = 'Invalid encoding type.';
+            }
+
+            document.getElementById('output').textContent = outputText;
+        }
+
+        // Helper function to convert string to Hex
+        function stringToHex(str) {
+            return str.split('').map(function (char) {
+                return char.charCodeAt(0).toString(16);
+            }).join(' ');
+        }
+
+        // Helper function to convert Hex to string
+        function hexToString(hex) {
+            const hexArray = hex.split(' ');
+            let str = '';
+            for (let i = 0; i < hexArray.length; i++) {
+                str += String.fromCharCode(parseInt(hexArray[i], 16));
+            }
+            return str;
+        }
+    </script>
+</body>
+</html>

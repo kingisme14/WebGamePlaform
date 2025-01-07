@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>反應速度遊戲</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .game-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            background-color: #fff;
+            border: 2px solid #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .reaction-button {
+            width: 150px;
+            height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .score {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <div class="score" id="score">準備好開始！</div>
+        <button class="reaction-button" id="reactionButton">藍色</button>
+    </div>
+
+    <script>
+        const reactionButton = document.getElementById("reactionButton");
+        const scoreElement = document.getElementById("score");
+
+        let startTime;
+        let reactionTime;
+        let gameRunning = false;
+        let waitingForGreen = false;
+
+        // 顏色變化邏輯
+        function changeColor() {
+            const randomDelay = Math.random() * 2000 + 2000; // 隨機延遲 2 到 4 秒
+            scoreElement.textContent = "準備...";
+
+            setTimeout(() => {
+                if (!gameRunning) return;
+
+                reactionButton.style.backgroundColor = "green"; // 改為綠色
+                reactionButton.textContent = "點擊我！";
+                waitingForGreen = true; // 等待綠色被點擊
+                startTime = Date.now(); // 記錄開始時間
+            }, randomDelay);
+        }
+
+        // 檢查點擊事件
+        reactionButton.onclick = function () {
+            if (!gameRunning) return;
+
+            if (waitingForGreen) {
+                // 如果按鈕是綠色
+                reactionTime = Date.now() - startTime;
+                scoreElement.textContent = `你的反應時間是: ${reactionTime} 毫秒`;
+                waitingForGreen = false; // 結束等待綠色
+                resetGame(); // 重置遊戲
+            } else {
+                // 如果按鈕是藍色
+                scoreElement.textContent = "失敗！點擊了藍色！";
+                waitingForGreen = false; // 結束遊戲
+                resetGame(); // 重置遊戲
+            }
+        };
+
+        // 重置遊戲
+        function resetGame() {
+            reactionButton.style.backgroundColor = "blue"; // 設為藍色
+            reactionButton.textContent = "藍色";
+            setTimeout(startGame, 2000); // 2秒後重新開始
+        }
+
+        // 開始遊戲
+        function startGame() {
+            gameRunning = true;
+            changeColor();
+        }
+
+        // 初次啟動遊戲
+        startGame();
+    </script>
+
+</body>
+</html>

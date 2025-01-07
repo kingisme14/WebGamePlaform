@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Difference Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 50%;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        input[type="date"], button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+
+            .result span {
+                font-weight: bold;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Date Difference Calculator</h1>
+
+        <!-- Date input fields -->
+        <input type="date" id="startDate" onchange="calculateDifference()">
+        <input type="date" id="endDate" onchange="calculateDifference()">
+
+        <button onclick="calculateDifference()">Calculate Difference</button>
+
+        <div class="result" id="result">
+            <p>Days: <span id="daysDiff">0</span></p>
+            <p>Months: <span id="monthsDiff">0</span></p>
+            <p>Years: <span id="yearsDiff">0</span></p>
+        </div>
+    </div>
+
+    <script>
+        function calculateDifference() {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+
+            // If either date is empty, do not calculate
+            if (!startDate || !endDate) {
+                return;
+            }
+
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+
+            // Calculate the difference in milliseconds
+            const diffTime = Math.abs(end - start);
+
+            // Convert milliseconds to days
+            const days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+            // Calculate the difference in months
+            const years = end.getFullYear() - start.getFullYear();
+            const months = end.getMonth() - start.getMonth() + years * 12;
+
+            // Calculate the difference in years
+            const yearsDiff = Math.floor(months / 12);
+
+            // Update the results
+            document.getElementById('daysDiff').textContent = days;
+            document.getElementById('monthsDiff').textContent = months;
+            document.getElementById('yearsDiff').textContent = yearsDiff;
+        }
+    </script>
+</body>
+</html>

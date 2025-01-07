@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Selector with Animation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 50%;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        textarea, button, input {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            opacity: 0;
+            transform: scale(0);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+            #result.show {
+                opacity: 1;
+                transform: scale(1);
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Random Selector with Animation</h1>
+
+        <!-- User input for options -->
+        <textarea id="inputOptions" rows="6" placeholder="Enter options, one per line"></textarea>
+
+        <!-- Input for number of random selections -->
+        <input type="number" id="numSelections" placeholder="Enter number of selections" min="1">
+
+        <!-- Button to trigger random selection -->
+        <button onclick="selectRandom()">Select</button>
+
+        <!-- Display selected random option -->
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function selectRandom() {
+            const options = document.getElementById('inputOptions').value.trim().split('\n');
+
+            // Remove empty options
+            const filteredOptions = options.filter(option => option.trim() !== '');
+            const numSelections = parseInt(document.getElementById('numSelections').value);
+
+            if (filteredOptions.length === 0) {
+                alert('Please enter at least one option.');
+                return;
+            }
+
+            if (isNaN(numSelections) || numSelections < 1 || numSelections > filteredOptions.length) {
+                alert('Please enter a valid number of selections.');
+                return;
+            }
+
+            // Show the slot machine spinning effect
+            const resultElement = document.getElementById('result');
+            resultElement.classList.remove('show');  // Hide result before updating
+            resultElement.textContent = '';
+
+            // Randomly select the specified number of options
+            let selectedOptions = [];
+            while (selectedOptions.length < numSelections) {
+                const randomIndex = Math.floor(Math.random() * filteredOptions.length);
+                const selectedOption = filteredOptions[randomIndex];
+
+                // Prevent duplicates
+                if (!selectedOptions.includes(selectedOption)) {
+                    selectedOptions.push(selectedOption);
+                }
+            }
+
+            // Show the results with animation
+            setTimeout(() => {
+                resultElement.textContent = `Selected: ${selectedOptions.join(', ')}`;
+                resultElement.classList.add('show');  // Show result with animation
+            }, 500);  // Delay to allow the hiding animation to complete
+        }
+    </script>
+</body>
+</html>

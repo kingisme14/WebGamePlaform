@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>迷宮遊戲</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .maze-container {
+            display: grid;
+            grid-template-columns: repeat(10, 30px);
+            grid-template-rows: repeat(10, 30px);
+            gap: 2px;
+            border: 2px solid #333;
+        }
+
+        .cell {
+            width: 30px;
+            height: 30px;
+            background-color: #eee;
+        }
+
+        .wall {
+            background-color: #000;
+        }
+
+        .start {
+            background-color: green;
+        }
+
+        .end {
+            background-color: red;
+        }
+
+        .player {
+            background-color: blue;
+        }
+
+        .moving-black {
+            background-color: black;
+        }
+
+        .status {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .reset-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            .reset-button:hover {
+                background-color: #45a049;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="maze-container" id="mazeContainer"></div>
+        <div class="status" id="status">移動玩家 (使用箭頭鍵)</div>
+        <button class="reset-button" id="resetButton">重新開始</button>
+    </div>
+
+    <script>
+        const mazeContainer = document.getElementById("mazeContainer");
+        const status = document.getElementById("status");
+        const resetButton = document.getElementById("resetButton");
+
+        const mazeSize = 10; // 迷宮大小 10x10
+        let maze = [];
+        let playerPos = { x: 0, y: 0 }; // 玩家起始位置
+        let endPos = { x: 9, y: 9 }; // 終點位置
+        let blackBlockPos = { x: 4, y: 4 }; // 初始的黑色區塊位置
+
+        // 迷宮的建構函式
+        function generateMaze() {
+            maze = [];
+            for (let y = 0; y < mazeSize; y++) {
+                const row = [];
+                for (let x = 0; x < mazeSize; x++) {
+                    if (Math.random() < 0.2 && !(x === 0 && y === 0) && !(x === 9 && y === 9)) {
+                        row.push('wall'); // 隨機牆壁
+                    } else {
+                        row.push('empty');
+                    }
+                }
+                maze.push(row);
+            }
+
+            maze[0][0] = 'start'; // 起點
+            maze[9][9] = 'end'; // 終點
+        }
+
+        // 隨機移動黑色區塊
+        function moveBlackBlock() {
+            const emptyCells = [];
+            for (let y = 0; y < mazeSize; y++) {
+                for (let x = 0; x < mazeSize; x++) {
+                    if (maze[y][x] !== 'wall' && (x !== playerPos.x || y !== playerPos.y) && (x !== endPos.x || y !== endPos.y)) {
+                        emptyCells.push({ x, y });
+                    }
+                }
+            }
+
+            const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+            blackBlockPos = randomCell;
+        }
+
+        // 渲染迷宮
+        function renderMaze() {
+            mazeContainer.innerHTML = '';
+            for (let y = 0; y < mazeSize; y++) {
+                for (let x = 0; x < mazeSize; x++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    if (maze[y][x] === 'wall') {
+                        cell.classList.add('wall');
+                    } else if (maze[y][x] === 'start') {
+                        cell.classList.add('start');
+                    } else if (maze[y][x] === 'end') {
+                        cell.classList.add('end');
+                    }
+                    if (x === playerPos.x && y === playerPos.y) {
+                        cell.classList.add('player');
+                    }
+                    if (x === blackBlockPos.x && y === blackBlockPos.y) {
+                        cell.classList.add('moving-black');
+                    }
+                    mazeContainer.appendChild(cell);
+                }
+            }
+        }
+
+        // 處理玩家的移動
+        function movePlayer(dx, dy) {
+            const newX = playerPos.x + dx;
+            const newY = playerPos.y + dy;
+
+            if (newX >= 0 && newX < mazeSize && newY >= 0 && newY < mazeSize && maze[newY][newX] !== 'wall') {
+                playerPos.x = newX;
+                playerPos.y = newY;
+            }
+
+            if (playerPos.x === endPos.x && playerPos.y === endPos.y) {
+                status.textContent = "恭喜！你到達終點！";
+            }
+
+            renderMaze();
+        }
+
+        // 鍵盤按鍵事件
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "ArrowUp") {
+                movePlayer(0, -1);
+            } else if (event.key === "ArrowDown") {
+                movePlayer(0, 1);
+            } else if (event.key === "ArrowLeft") {
+                movePlayer(-1, 0);
+            } else if (event.key === "ArrowRight") {
+                movePlayer(1, 0);
+            }
+        });
+
+        // 重新開始遊戲
+        resetButton.addEventListener("click", () => {
+            playerPos = { x: 0, y: 0 };
+            blackBlockPos = { x: 4, y: 4 }; // 重置黑色區塊位置
+            generateMaze();
+            renderMaze();
+            status.textContent = "移動玩家 (使用箭頭鍵)";
+        });
+
+        // 開始遊戲
+        function startGame() {
+            generateMaze();
+            renderMaze();
+            setInterval(() => {
+                moveBlackBlock();
+                renderMaze();
+            }, 1000); // 每秒隨機移動一次黑色區塊
+        }
+
+        // 開始遊戲
+        startGame();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator and Decoder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 400px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        #qrCode {
+            margin-top: 20px;
+            padding: 10px;
+        }
+
+        #decoderOutput {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .file-input {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>QR Code Generator and Decoder</h1>
+
+        <!-- QR Code Generator Section -->
+        <div>
+            <input type="text" id="qrText" placeholder="Enter text to generate QR code" />
+            <button onclick="generateQRCode()">Generate QR Code</button>
+            <div id="qrCode"></div>
+        </div>
+
+        <!-- QR Code Decoder Section -->
+        <div class="file-input">
+            <input type="file" id="qrFile" accept="image/*" />
+            <button onclick="decodeQRCode()">Decode QR Code</button>
+            <div id="decoderOutput">Decoded result will appear here</div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+
+    <script>
+        // QR Code Generator
+        function generateQRCode() {
+            const qrText = document.getElementById('qrText').value;
+            if (qrText.trim() === '') {
+                alert('Please enter some text to generate QR code.');
+                return;
+            }
+
+            // 使用 toDataURL 生成 QR 碼圖片
+            QRCode.toDataURL(qrText, { errorCorrectionLevel: 'H' }, function (error, url) {
+                if (error) {
+                    console.error('Error generating QR code:', error);
+                    alert('Failed to generate QR code. Please try again.');
+                    return;
+                }
+                // 將生成的 QR 碼顯示為圖片
+                document.getElementById('qrCode').innerHTML = `<img src="${url}" alt="QR Code" />`;
+            });
+        }
+
+        // QR Code Decoder
+        function decodeQRCode() {
+            const fileInput = document.getElementById('qrFile');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert('Please upload a QR code image.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = new Image();
+                img.onload = function () {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0, img.width, img.height);
+
+                    // Decode QR code
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const decoded = jsQR(imageData.data, canvas.width, canvas.height);
+
+                    if (decoded) {
+                        document.getElementById('decoderOutput').textContent = 'Decoded text: ' + decoded.data;
+                    } else {
+                        document.getElementById('decoderOutput').textContent = 'No QR code found in the image.';
+                    }
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+</html>

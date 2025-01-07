@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Counter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 50%;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            height: 150px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .counter {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+
+            .counter span {
+                font-weight: bold;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Text Counter</h1>
+        <textarea id="inputText" placeholder="Start typing..." oninput="updateCounter()"></textarea>
+
+        <div class="counter">
+            <p>Character Count: <span id="charCount">0</span></p>
+            <p>Word Count: <span id="wordCount">0</span></p>
+        </div>
+    </div>
+
+    <script>
+        // Function to update character and word count
+        function updateCounter() {
+            const inputText = document.getElementById('inputText').value;
+
+            // Calculate the number of characters
+            const charCount = inputText.length;
+
+            // Calculate the number of words (splitting by spaces)
+            const wordCount = inputText.trim() ? inputText.trim().split(/\s+/).length : 0;
+
+            // Update the displayed counts
+            document.getElementById('charCount').textContent = charCount;
+            document.getElementById('wordCount').textContent = wordCount;
+        }
+    </script>
+</body>
+</html>

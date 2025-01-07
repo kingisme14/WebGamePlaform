@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>連連看遊戲</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            display: grid;
+            gap: 5px;
+            background-color: #333;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .cell {
+            width: 60px;
+            height: 60px;
+            background-color: #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+            .cell.selected {
+                background-color: #a3d8f7;
+            }
+
+            .cell.matched {
+                background-color: #90EE90;
+            }
+
+        #message {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        #timer {
+            font-size: 18px;
+        }
+
+        #startBtn {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            #startBtn:hover {
+                background-color: #45a049;
+            }
+    </style>
+</head>
+<body>
+
+    <button id="startBtn" onclick="startGame()">Start Game</button>
+    <div id="message"></div>
+    <div id="timer"></div>
+    <div class="container" id="gameBoard"></div>
+
+    <script>
+        const images = ['🍎', '🍌', '🍓', '🍇', '🍉', '🍊', '🍍', '🍑', '🍒', '🍓'];
+        let board = [];
+        let selectedCells = [];
+        let moves = 0;
+        let timer;
+        let startTime;
+        let currentLevel = 0;
+        const levelSizes = [4, 6, 8, 10]; // Available levels: 4x4, 6x6, 8x8, 10x10
+        let currentImages = [];
+
+        // Initialize game board
+        function initializeBoard(rows, cols) {
+            const gameBoard = document.getElementById('gameBoard');
+            gameBoard.innerHTML = '';
+            board = [];
+
+            // Generate enough images for the current level
+            currentImages = generateImages(rows * cols / 2);
+
+            const shuffledImages = shuffle(currentImages.concat(currentImages)); // Duplicate images for pairing
+
+            for (let i = 0; i < rows; i++) {
+                const row = [];
+                for (let j = 0; j < cols; j++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    cell.dataset.row = i;
+                    cell.dataset.col = j;
+                    cell.dataset.image = shuffledImages.pop();
+                    cell.innerText = ''; // Start with empty cells
+                    cell.addEventListener('click', handleCellClick);
+                    row.push(cell);
+                    gameBoard.appendChild(cell);
+                }
+                board.push(row);
+            }
+
+            // Adjust grid size for each level
+            gameBoard.style.gridTemplateColumns = `repeat(${cols}, 60px)`;
+            gameBoard.style.gridTemplateRows = `repeat(${rows}, 60px)`;
+        }
+
+        // Generate images based on level size (half of the total cells)
+        function generateImages(numPairs) {
+            const availableImages = images.slice(0, numPairs); // Take only the number of pairs needed
+            return availableImages;
+        }
+
+        // Shuffle array function
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+            }
+            return array;
+        }
+
+        // Handle cell click event
+        function handleCellClick(event) {
+            const cell = event.target;
+
+            if (cell.classList.contains('selected') || selectedCells.length === 2) return;
+
+            cell.classList.add('selected');
+            cell.innerText = cell.dataset.image;
+            selectedCells.push(cell);
+
+            // If two cells are selected, check if they match
+            if (selectedCells.length === 2) {
+                setTimeout(checkMatch, 500);
+            }
+        }
+
+        // Check if selected cells match
+        function checkMatch() {
+            const [firstCell, secondCell] = selectedCells;
+            if (firstCell.dataset.image === secondCell.dataset.image) {
+                // Match found, remove the cells
+                firstCell.removeEventListener('click', handleCellClick);
+                secondCell.removeEventListener('click', handleCellClick);
+                firstCell.classList.add('matched');
+                secondCell.classList.add('matched');
+                checkGameOver();
+            } else {
+                // No match, reset the selected cells
+                firstCell.classList.remove('selected');
+                secondCell.classList.remove('selected');
+                firstCell.innerText = '';
+                secondCell.innerText = '';
+            }
+            selectedCells = [];
+            moves++;
+        }
+
+        // Check if the game is over
+        function checkGameOver() {
+            const matchedCells = document.querySelectorAll('.matched');
+            const totalCells = board.length * board[0].length;
+
+            if (matchedCells.length === totalCells) {
+                const elapsedTime = ((Date.now() - startTime) / 1000).toFixed(2);
+                document.getElementById('message').textContent = `Level ${currentLevel + 1} Complete! You finished in ${elapsedTime} seconds.`;
+                clearInterval(timer);
+                if (currentLevel < levelSizes.length - 1) {
+                    setTimeout(nextLevel, 2000);
+                }
+            }
+        }
+
+        // Start the game
+        function startGame() {
+            currentLevel = 0;
+            moves = 0;
+            document.getElementById('startBtn').disabled = true;
+            startLevel();
+        }
+
+        // Start a new level
+        function startLevel() {
+            const rows = levelSizes[currentLevel];
+            const cols = levelSizes[currentLevel];
+            initializeBoard(rows, cols);
+            startTime = Date.now();
+            timer = setInterval(updateTimer, 100);
+            document.getElementById('message').textContent = `Level ${currentLevel + 1}`;
+        }
+
+        // Update the timer
+        function updateTimer() {
+            const elapsedTime = ((Date.now() - startTime) / 1000).toFixed(2);
+            document.getElementById('timer').textContent = `Time: ${elapsedTime} seconds`;
+        }
+
+        // Go to the next level
+        function nextLevel() {
+            currentLevel++;
+            if (currentLevel < levelSizes.length) {
+                startLevel();
+            } else {
+                document.getElementById('message').textContent = `Game Over! You completed all levels in ${moves} moves.`;
+                document.getElementById('startBtn').disabled = false;
+            }
+        }
+    </script>
+
+</body>
+</html>

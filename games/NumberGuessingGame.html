@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猜數字遊戲</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f9f9f9;
+            padding-top: 50px;
+        }
+
+        .game-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 100px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #45a049;
+            }
+
+        .feedback {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .game-stats {
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .reset-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ff5733;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+            .reset-btn:hover {
+                background-color: #e8492d;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>猜數字遊戲</h1>
+        <div>
+            <label for="guess">猜一個 1 到 5000 的數字:</label>
+            <input type="number" id="guess" min="1" max="5000">
+            <button onclick="checkGuess()">猜測</button>
+        </div>
+        <div id="feedback" class="feedback"></div>
+        <div id="gameStats" class="game-stats"></div>
+        <button id="resetBtn" class="reset-btn" onclick="resetGame()" style="display: none;">重新開始</button>
+    </div>
+
+    <script>
+        let targetNumber;
+        let attempts;
+        let maxAttempts = 10;
+
+        // 初始化遊戲
+        function startGame() {
+            targetNumber = Math.floor(Math.random() * 5000) + 1; // 隨機生成 1 到 5000 的數字
+            attempts = 0;
+            document.getElementById('feedback').textContent = '';
+            document.getElementById('gameStats').textContent = `你有 ${maxAttempts} 次猜測機會。`;
+            document.getElementById('resetBtn').style.display = 'none';
+        }
+
+        // 檢查玩家的猜測
+        function checkGuess() {
+            const userGuess = parseInt(document.getElementById('guess').value);
+
+            if (isNaN(userGuess) || userGuess < 1 || userGuess > 5000) {
+                document.getElementById('feedback').textContent = "請輸入一個有效的數字（1 到 5000）。";
+                return;
+            }
+
+            attempts++;
+            if (userGuess < targetNumber) {
+                document.getElementById('feedback').textContent = "太小了！再試試看。";
+            } else if (userGuess > targetNumber) {
+                document.getElementById('feedback').textContent = "太大了！再試試看。";
+            } else {
+                document.getElementById('feedback').textContent = `恭喜你，猜對了！數字是 ${targetNumber}。`;
+                document.getElementById('gameStats').textContent = `你用了 ${attempts} 次猜測。`;
+                document.getElementById('resetBtn').style.display = 'inline-block';
+                return;
+            }
+
+            if (attempts >= maxAttempts) {
+                document.getElementById('feedback').textContent = `遊戲結束！你沒有猜對。正確的數字是 ${targetNumber}。`;
+                document.getElementById('resetBtn').style.display = 'inline-block';
+            } else {
+                document.getElementById('gameStats').textContent = `你還剩下 ${maxAttempts - attempts} 次猜測機會。`;
+            }
+        }
+
+        // 重置遊戲
+        function resetGame() {
+            startGame();
+            document.getElementById('guess').value = '';
+        }
+
+        // 開始遊戲
+        startGame();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>貨幣轉換器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        select, input, button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+        .switch {
+            margin-top: 10px;
+            background-color: #6c757d;
+        }
+
+            .switch:hover {
+                background-color: #5a6268;
+            }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>貨幣轉換器</h1>
+        <label for="amount">金額:</label>
+        <input type="number" id="amount" placeholder="輸入金額" />
+
+        <label for="fromCurrency">從:</label>
+        <select id="fromCurrency"></select>
+
+        <button class="switch" id="switchBtn">⇆ 交換</button>
+
+        <label for="toCurrency">到:</label>
+        <select id="toCurrency"></select>
+
+        <button id="convertBtn">轉換</button>
+        <div class="result">結果: <span id="result">--</span></div>
+    </div>
+
+    <script>
+        // API 金鑰與端點
+        const apiKey = 'a40d72b22346338f79586948'; // 替換為你的匯率 API 金鑰
+        const apiUrl = 'https://open.er-api.com/v6/latest';
+
+        // 獲取貨幣列表
+        async function fetchCurrencies() {
+            try {
+                const response = await fetch(`${apiUrl}/USD`); // 使用 USD 為基準匯率
+                const data = await response.json();
+                return Object.keys(data.rates);
+            } catch (error) {
+                console.error('Error fetching currencies:', error);
+                alert('獲取貨幣列表失敗，請稍後重試！');
+            }
+        }
+
+        // 初始化貨幣下拉選單
+        async function populateCurrencyDropdowns() {
+            const currencies = await fetchCurrencies();
+            const fromDropdown = document.getElementById('fromCurrency');
+            const toDropdown = document.getElementById('toCurrency');
+
+            currencies.forEach(currency => {
+                const optionFrom = document.createElement('option');
+                const optionTo = document.createElement('option');
+                optionFrom.value = currency;
+                optionTo.value = currency;
+                optionFrom.textContent = currency;
+                optionTo.textContent = currency;
+                fromDropdown.appendChild(optionFrom);
+                toDropdown.appendChild(optionTo);
+            });
+
+            // 預設選擇
+            fromDropdown.value = 'USD';
+            toDropdown.value = 'EUR';
+        }
+
+        // 轉換貨幣
+        async function convertCurrency() {
+            const amount = document.getElementById('amount').value;
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const toCurrency = document.getElementById('toCurrency').value;
+
+            if (!amount || amount <= 0) {
+                alert('請輸入有效的金額！');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${apiUrl}/${fromCurrency}`);
+                const data = await response.json();
+                const rate = data.rates[toCurrency];
+                if (rate) {
+                    const result = (amount * rate).toFixed(2);
+                    document.getElementById('result').textContent = `${result} ${toCurrency}`;
+                } else {
+                    document.getElementById('result').textContent = '無法完成轉換';
+                }
+            } catch (error) {
+                console.error('Error fetching exchange rate:', error);
+                alert('轉換失敗，請稍後再試！');
+            }
+        }
+
+        // 反向切換貨幣
+        function switchCurrencies() {
+            const fromDropdown = document.getElementById('fromCurrency');
+            const toDropdown = document.getElementById('toCurrency');
+
+            // 交換選中的貨幣值
+            const temp = fromDropdown.value;
+            fromDropdown.value = toDropdown.value;
+            toDropdown.value = temp;
+        }
+
+        // 設定事件監聽與初始化
+        document.getElementById('convertBtn').addEventListener('click', convertCurrency);
+        document.getElementById('switchBtn').addEventListener('click', switchCurrencies);
+        populateCurrencyDropdowns();
+    </script>
+</body>
+</html>

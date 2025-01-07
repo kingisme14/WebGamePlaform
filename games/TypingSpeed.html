@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>打字遊戲</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+            padding-top: 50px;
+        }
+
+        .game-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        #wordDisplay {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 60%;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #45a049;
+            }
+
+        .stats {
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .reset-btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ff5733;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+            .reset-btn:hover {
+                background-color: #e8492d;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <h1>打字遊戲</h1>
+        <div id="wordDisplay">請等候單詞...</div>
+        <input type="text" id="inputText" placeholder="開始打字..." oninput="checkInput()" onpaste="return false;">
+        <div id="stats" class="stats"></div>
+        <button id="startBtn" onclick="startGame()">開始遊戲</button>
+        <button id="resetBtn" class="reset-btn" onclick="resetGame()" style="display: none;">重新開始</button>
+    </div>
+
+    <script>
+        let wordList = ["apple", "banana", "cherry", "grape", "orange", "kiwi", "watermelon", "peach", "pineapple", "strawberry"];
+        let currentWord;
+        let startTime;
+        let isGameStarted = false;
+        let mistakes = 0;
+        let totalWords = 0;
+        let gameInterval;
+        let elapsedTime = 0;
+
+        function startGame() {
+            document.getElementById('stats').textContent = '';
+            document.getElementById('inputText').value = '';
+            document.getElementById('inputText').disabled = false;
+            document.getElementById('startBtn').style.display = 'none';
+            document.getElementById('resetBtn').style.display = 'inline-block';
+
+            isGameStarted = true;
+            mistakes = 0;
+            totalWords = 0;
+            elapsedTime = 0;
+            nextWord();
+            startTime = new Date();
+
+            // Start updating the time every second
+            gameInterval = setInterval(updateTime, 1000);
+        }
+
+        function nextWord() {
+            const randomIndex = Math.floor(Math.random() * wordList.length);
+            currentWord = wordList[randomIndex];
+            document.getElementById('wordDisplay').textContent = currentWord;
+        }
+
+        function checkInput() {
+            const inputText = document.getElementById('inputText').value;
+            if (inputText === currentWord) {
+                totalWords++;
+                document.getElementById('inputText').value = '';
+                nextWord();
+
+                const accuracy = ((totalWords - mistakes) / totalWords) * 100;
+                document.getElementById('stats').textContent = `時間: ${elapsedTime}秒 | 錯誤: ${mistakes} | 準確度: ${accuracy.toFixed(2)}%`;
+
+                // Display completion message after 10 words
+                if (totalWords === 10) {
+                    endGame();
+                }
+            }
+        }
+
+        function updateTime() {
+            elapsedTime++;
+            const accuracy = ((totalWords - mistakes) / totalWords) * 100;
+            document.getElementById('stats').textContent = `時間: ${elapsedTime}秒 | 錯誤: ${mistakes} | 準確度: ${accuracy.toFixed(2)}%`;
+        }
+
+        function endGame() {
+            clearInterval(gameInterval); // Stop the timer
+            const accuracy = ((totalWords - mistakes) / totalWords) * 100;
+            document.getElementById('stats').textContent = `遊戲結束！\n時間: ${elapsedTime}秒 | 錯誤: ${mistakes} | 準確度: ${accuracy.toFixed(2)}%`;
+            document.getElementById('inputText').disabled = true;
+        }
+
+        function resetGame() {
+            clearInterval(gameInterval); // Clear interval when resetting
+            document.getElementById('inputText').disabled = true;
+            document.getElementById('startBtn').style.display = 'inline-block';
+            document.getElementById('resetBtn').style.display = 'none';
+            document.getElementById('wordDisplay').textContent = '請等候單詞...';
+            document.getElementById('stats').textContent = '';
+        }
+    </script>
+
+</body>
+</html>
