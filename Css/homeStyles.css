@@ -84,12 +84,13 @@ body {
     }
 
 /* 遊戲展示區 */
-.featured-games, .featured-tools{
+.featured-games, .featured-tools {
     flex-grow: 1;
     padding: 20px;
     background-color: #1e1e1e;
     max-width: 960px;
     margin: 20px auto 0; /* 上方增加 20px，其他保持置中 */
+    animation: fadeIn 1s ease-in-out;
 }
 
 
@@ -168,8 +169,7 @@ body {
     background-position: center; /* 置中顯示背景 */
     background-size: 100%; /* 將圖片縮放為容器的 80% */
     background-position: center -150px; /* 往上移動 50px */
-
-
+    animation: fadeIn 1s ease-in-out;
     background-color: #2a2a2a; /* Dark background for the player */
     border-radius: 8px;
     padding: 15px;
@@ -260,15 +260,48 @@ footer {
         }
 
         /* 設置按鈕的基本樣式 */
-button {
-    padding: 10px 20px;
-    margin: 5px;
-    cursor: pointer;
+/* 按鈕容器樣式 */
+.button-container {
+    display: flex; /* 使用 Flexbox */
+    justify-content: center; /* 水平置中 */
+    align-items: center; /* 垂直置中 */
+    gap: 15px; /* 按鈕之間的間距 */
+    height: 10vh; /* 容器高度，讓按鈕置於頁面正中 */
+    background-color: #222; /* 可選：設置背景顏色以與整體風格一致 */
+    animation: fadeIn 1s ease-in-out;
 }
 
-button.active {
-    background-color: #007BFF;
-    color: white;
+/* 按鈕樣式 */
+button {
+    font-family: 'Courier Prime', monospace;
+    background-color: #444; /* 深灰色背景 */
+    color: #ddd; /* 字體顏色 */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px; /* 圓角邊框 */
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease; /* 過渡效果 */
+}
+
+    button:hover {
+        background-color: #666; /* 懸停時的背景色 */
+        color: white; /* 懸停時的字體顏色 */
+        transform: scale(1.05); /* 懸停時稍微放大 */
+    }
+
+    button:active {
+        transform: scale(0.95); /* 按下時縮小 */
+    }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 /* 預設隱藏所有section，除了 game-player 和 featured-games */
@@ -278,5 +311,31 @@ button.active {
 
 .featured-tools {
     display: none;   /* 預設隱藏 featured-tools */
+}
+
+/* 破碎小塊樣式（不規則形狀） */
+.piece {
+    position: absolute;
+    width: 30px; /* 基本大小 */
+    height: 30px;
+    background-color: #444;
+    opacity: 1;
+    animation: shatter 1s ease forwards;
+    /* 動態設置 clip-path */
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+
+/* 破碎效果動畫 */
+@keyframes shatter {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(calc(var(--dx) * 150px), calc(var(--dy) * 150px)) rotate(calc(var(--r) * 360deg));
+        opacity: 0;
+    }
 }
 
