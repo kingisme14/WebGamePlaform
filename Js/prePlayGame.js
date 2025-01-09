@@ -2,8 +2,8 @@
 const gameUrls = [
     "https://kingisme14.github.io/webTopGame/",
     "https://kusogamemaker.github.io/FrogFiftyKana/",
-    "https://kuioo.tw/g/play/Squid-game-io/",
-    "https://www.youtube.com/embed/7EVofmoN0K8?si=7VeUzfUIWLeZvt3C"
+    "./games/ConnectMatching.html",
+    "./games/TypingSpeed.html"
 ];
 
 let currentGameIndex = 0;  // 當前顯示的遊戲索引
