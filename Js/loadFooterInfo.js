@@ -5,7 +5,7 @@ footerContent.classList.add('footer-content');  // 添加類名
 
 // 創建第1個 p 元素
 const p1 = document.createElement('p');
-p1.innerHTML = '&copy; 2025 kusokusogame. All rights reserved.';
+p1.innerHTML = '&copy; 2025 WaaMooGeePlay. All rights reserved.';
 footerContent.appendChild(p1);
 
 // 創建第2個 p 元素
