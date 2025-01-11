@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <style>
+        *{
+    position: relative;
+    box-sizing: border-box;
+    font-family: arial;
+}
+html,body{
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    text-align: center;
+}
+
+.result{
+    font-size: 1.2em;
+    color: green;
+}
+
+.error{
+    color: red;
+}
+
+code{
+    background: #ccc;
+}
+
+ul{
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin: 5px 0;
+}
+
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,td{
+    border: 1px solid #000;
+    text-align: left;
+}
+
+th{
+    background-color: aqua;
+}
+
+tfoot td{
+    background-color: #ccc;
+    text-align: center;
+}
+
+label{
+    display: block;
+}
+
+/* input, select{
+    display:block;
+} */
+
+#agree, #gender1, #gender2, button{
+    display:inline-block;
+}
+    </style>
+</head>
+<body>
+   <h1>1A2B 猜數字</h1>
+   <input type="text" id="guess" placeholder="請輸入四位數字">
+   <button id="start">猜</button>
+   <div class="result" id="result"></div>
+   <h2>猜測紀錄</h2>
+   <ul id="history"></ul>
+</body>
+</html>
+<script>
+    function isUnique4Numbers(input)
+{
+    if(input.length != 4)
+        return false;
+    for(let char of input)
+    {
+        if(char < '0' || char > '9')
+            return false;
+    }
+    var unique = new Set(input)
+    return unique.size == 4;
+}
+
+var digits = [];
+
+while(digits.length<4)
+{
+    var number = Math.floor(Math.random()*10);
+    if(!digits.includes(number))
+        digits.push(number);
+}
+
+
+var times = 0;
+
+function play(){
+    var guess = document.getElementById("guess").value;
+    var result = document.getElementById("result");
+    
+    if(!isUnique4Numbers(guess))
+    {
+        result.innerHTML = "請輸入四位不相同的數字";
+        result.className = "result error";
+        // return;
+    }
+    else
+    {
+        times++;
+        result.className = "result";
+        var A = 0;
+        var B = 0;
+        for(var i = 0;i < 4;i++)
+        {
+            if(parseInt(guess[i]) == digits[i])
+                A++;
+            else if(digits.includes(parseInt(guess[i])))
+                B++;
+            console.log(`${guess[i]} == ${digits[i]}`);
+        }
+
+        if(A == 4)
+        {
+            var ouput = `恭喜你答對了，共猜${times}次!`;
+            result.innerHTML = ouput;
+        }
+        else
+        {
+            var ouput = `第${times}次:${guess} -> ${A}A${B}B`;
+            result.innerHTML = ouput;
+            var history = document.getElementById("history");
+            var li = document.createElement("li");
+            li.textContent = ouput;
+            history.appendChild(li);
+        }
+        
+    }
+}
+
+document.getElementById("start").addEventListener('click',function(){
+    play();
+});
+document.getElementById("guess").addEventListener('keyup',function(e){
+    if(e.key == 'Enter'){
+        play();
+    }
+});
+</script>
