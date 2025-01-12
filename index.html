@@ -55,7 +55,7 @@
         <!-- 展示區 -->
         <div class="flip-container">
             <div class="flip-card">
-                <div class="flip-content">
+                <dv class="flip-content">
                     <!-- 遊戲展示區 -->
                     <section class="featured-games">
                         <h2>Featured Games</h2>
@@ -243,7 +243,7 @@
                                     <option value="All">All</option>
                                     <option value="Beat">Beat</option>
                                     <option value="Pop">Pop</option>
-                                    <option value="Epic">Epic</option>
+                                    <option value="Epic" selected>Epic</option>
                                     <option value="Lively">Lively</option>
                                 </select>
                             </span>
@@ -557,7 +557,7 @@
                                 </div>
                                 <h3>Pop1</h3>
                                 <p>By jacklehamster</p>
-                                <a href="./audio/pop1.mp3" download="Pop1" class="download-link">Download Audio</a>
+                                <a href="./audio/pop1.mp3" class="download-link" onclick="downloadAudio(event, './audio/pop1.mp3', 'Pop1')">Download Audio</a>
                                 <span class="feedback-message" style="display: none; color: green; font-size: 0.9em; margin-top: 5px;">Download started!</span>
                             </div>
                             <!-- 音樂32 -->
@@ -633,14 +633,12 @@
 
 
                         </div>
+                        <!-- ----------------------------------- -->
 
-                            <!-- ----------------------------------- -->
-                        </div>
-
-                </section>
+                    </section>
             </div>
         </div>
-        </div>
+
 
 
 
@@ -654,15 +652,17 @@
     <script src="./Js/tagFilter.js"></script>
     <script src="./Js/brokenPicesEffect.js"></script>
     <script src="./Js/musicDownloadFeedback.js"></script>
-    <!-- Yandex.RTB R-A-13593653-1 -->
     <script>
-        window.yaContextCb.push(() => {
-            Ya.Context.AdvManager.render({
-                "blockId": "R-A-13593653-1",
-                "type": "floorAd",
-                "platform": "touch"
-            })
-        })
+        function downloadAudio(event, fileUrl, fileName) {
+            event.preventDefault(); // 防止默認行為（即開啟檔案頁面）
+
+            const link = document.createElement('a');
+            link.href = fileUrl;
+            link.download = fileName;
+            document.body.appendChild(link); // 將元素添加到 DOM
+            link.click(); // 模擬點擊下載
+            document.body.removeChild(link); // 下載後移除元素
+        }
     </script>
 </body>
 </html>

@@ -55,7 +55,7 @@ body {
 /* 背景圖片區域 */
 .background-banner {
     height: 200px;
-    background: url('https://via.placeholder.com/1280x200') no-repeat center center/cover;
+    background: url('https://via.placeholder.com/1280x200') no-repeat center center;
     margin: 0 auto;
 }
 
