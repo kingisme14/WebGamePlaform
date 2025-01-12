@@ -83,8 +83,8 @@ body {
         margin-bottom: 10px;
     }
 
-/* 遊戲展示區 */
-.featured-games, .featured-tools {
+/* 👇展示區 <---------------------------------------------------------*/
+.featured-games, .featured-tools, .featured-music {
     flex-grow: 1;
     padding: 20px;
     background-color: #1e1e1e;
@@ -94,13 +94,13 @@ body {
 }
 
 
-    .featured-games h2,.featured-tools h2 {
+    .featured-games h2, .featured-tools h2, .featured-music h2 {
         font-size: 28px;
         margin-bottom: 20px;
         text-align: center; /* 讓標題也置中 */
     }
 
-    .featured-games .filter-options,.featured-tools .filter-options {
+    .featured-games .filter-options, .featured-tools .filter-options, .featured-music .filter-options {
         margin-bottom: 20px;
         display: flex;
         gap: 15px;
@@ -108,23 +108,36 @@ body {
         justify-content: center; /* 置中过濾選項 */
     }
 
-    .featured-games select {
+    .featured-games select, .featured-music select{
         padding: 5px;
         background-color: #333;
         color: #fff;
         border: 1px solid #555;
         border-radius: 4px;
     }
+/* 預設隱藏所有section，除了 game-player 和 featured-games */
+.featured-games {
+    display: block; /* 預設顯示 featured-games */
+}
 
-/* 遊戲格子區域 */
-.game-grid, .tool-grid{
+.featured-tools {
+    display: none; /* 預設隱藏 featured-tools */
+}
+
+.featured-music {
+    display: none; /* 預設隱藏 featured-tools */
+}
+/*👆 展示區 --------------------------------------------------------->*/
+
+/* 展示格子區域 */
+.exhibit-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
-    justify-content: center; /* 遊戲格子置中 */
+    justify-content: center; /* 展示格子置中 */
 }
 
-.game-item, .tool-item{
+.exhibit-item{
     background-color: #2a2a2a;
     border: 1px solid #444;
     border-radius: 8px;
@@ -133,31 +146,48 @@ body {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-    .game-item a {
+    .exhibit-item a {
         text-decoration: none; /* 去除底線 */
     }
 
-    .game-item img {
+    .exhibit-item img {
         width: 100%;
         border-radius: 5px;
         margin-bottom: 10px;
     }
 
-    .game-item h3 {
+    .exhibit-item h3 {
         font-size: 18px;
         margin: 10px 0;
         color: #ffcc00;
     }
 
-    .game-item p {
+    .exhibit-item p {
         font-size: 14px;
         color: #aaa;
     }
 
-    .game-item:hover {
+    .exhibit-item:hover {
         transform: scale(1.05);
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     }
+.video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    overflow: hidden;
+    background-color: #000; /* Optional: Set background color */
+}
+
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
 /* 遊戲播放器區域 */
 .game-player {
     background: url('../images/background6.webp');
@@ -304,14 +334,7 @@ button {
     }
 }
 
-/* 預設隱藏所有section，除了 game-player 和 featured-games */
-.featured-games {
-    display: block;  /* 預設顯示 featured-games */
-}
 
-.featured-tools {
-    display: none;   /* 預設隱藏 featured-tools */
-}
 
 /* 破碎小塊樣式（不規則形狀） */
 .piece {
