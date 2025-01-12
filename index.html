@@ -361,24 +361,7 @@
     <script src="./Js/TagChange.js"></script>
     <script src="./Js/tagFilter.js"></script>
     <script src="./Js/brokenPicesEffect.js"></script>
-    <script>
-        document.querySelector('.download-link').addEventListener('click', function (event) {
-            const feedbackMessage = this.nextElementSibling;
-
-            // 顯示提示訊息
-            feedbackMessage.style.display = 'inline';
-
-            // 動畫效果
-            this.style.transition = 'transform 0.2s';
-            this.style.transform = 'scale(0.95)';
-
-            // 恢復原始樣式
-            setTimeout(() => {
-                this.style.transform = 'scale(1)';
-                feedbackMessage.style.display = 'none';
-            }, 2000); // 2秒後隱藏訊息
-        });
-    </script>
+    <script src="./Js/musicDownloadFeedback.js"></script>
     <!-- Yandex.RTB R-A-13593653-1 -->
     <script>
         window.yaContextCb.push(() => {
