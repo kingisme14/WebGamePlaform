@@ -257,7 +257,8 @@
                                 </div>
                                 <h3>Beat1</h3>
                                 <p>By jacklehamster</p>
-                                <button class="download-link" onclick="downloadAudio(event, './audio/beat1.mp3', 'Beat1')">Download Audio</button>
+                                <button class="download-button" onclick="downloadAudio(event, './audio/beat1.mp3', 'Beat1')">Download Audio</button>
+
                                 <span class="feedback-message" style="display: none; color: green; font-size: 0.9em; margin-top: 5px;">Download started!</span>
                             </div>
                             <!-- 音樂2 -->
@@ -660,10 +661,16 @@
 
             const link = document.createElement('a');
             link.href = fileUrl;
-            link.download = fileName;
+            link.download = fileName; // 設置下載文件的名稱
             document.body.appendChild(link); // 將元素添加到 DOM
             link.click(); // 模擬點擊下載
             document.body.removeChild(link); // 下載後移除元素
+
+            // 顯示提示訊息
+            var messageElement = event.target.nextElementSibling;
+            if (messageElement) {
+                messageElement.style.display = 'inline';
+            }
         }
     </script>
 </body>
