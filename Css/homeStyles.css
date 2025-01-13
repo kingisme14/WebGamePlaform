@@ -137,6 +137,14 @@ body {
     justify-content: center; /* 展示格子置中 */
 }
 
+/* 展示格子區域 */
+#music-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    justify-content: center; /* 展示格子置中 */
+}
+
 .exhibit-item{
     background-color: #2a2a2a;
     border: 1px solid #444;

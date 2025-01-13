@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     // 選擇所有下載按鈕
-    const downloadButtons = document.querySelectorAll('.download-link');
+    const downloadButtons = document.querySelectorAll('.download-button');
 
     // 為每個按鈕添加事件監聽
     downloadButtons.forEach(button => {
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }, 3000);
 
                 // 模擬觸發下載（可移除此行，留作實測用）
-                window.location.href = button.href;
+                //window.location.href = button.href;
             }
         });
     });
