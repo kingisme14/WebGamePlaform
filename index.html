@@ -59,97 +59,10 @@
                     <!-- 遊戲展示區 -->
                     <section class="featured-games">
                         <h2>Featured Games</h2>
-
-                        <div class="filter-options">
-                            <span>
-                                Category:
-                                <select id="tag-filter">
-                                    <option value="all">All</option>
-                                    <option value="puzzle">Puzzle</option>
-                                    <option value="arcade">Arcade</option>
-                                    <option value="adventure">Adventure</option>
-                                    <option value="education">Education</option>
-                                </select>
-                            </span>
-                        </div>
-                        <!-- 遊戲頁 -->
-                        <div class="exhibit-grid">
-                            <!-- 遊戲1 -->
-                            <div class="exhibit-item" data-tags="all,arcade">
-
-                                <a href="./games/TapGame.html" target="_blank">
-                                    <img src="./images/tap.png" alt="Game 1">
-                                    <h3>Tap Game</h3>
-                                    <p>By nulledwine</p>
-                                </a>
-                            </div>
-                            <!-- 遊戲2 -->
-                            <div class="exhibit-item" data-tags="all,education">
-                                <a href="./games/KanaFrog.html" target="_blank">
-                                    <img src="./images/frog.png" alt="Game 2">
-                                    <h3>KanaFrog</h3>
-                                    <p>By Chris</p>
-                                </a>
-                            </div>
-                            <!-- 遊戲3 -->
-                            <div class="exhibit-item" data-tags="all,education">
-                                <a href="./games/ConnectMatching.html" target="_blank">
-                                    <img src="./images/matching.png" alt="Game 3">
-                                    <h3>ConnectMatching</h3>
-                                    <p>By PukeBomb</p>
-                                </a>
-                            </div>
-                            <!-- 遊戲4 -->
-                            <div class="exhibit-item" data-tags="all,puzzle">
-                                <a href="./games/Maze.html" target="_blank">
-                                    <img src="./images/maze.png" alt="Game 4">
-                                    <h3>Maze</h3>
-                                    <p>By jacklehamster</p>
-                                </a>
-                            </div>
-                            <!-- 遊戲5 -->
-                            <div class="exhibit-item" data-tags="all,puzzle">
-                                <a href="./games/NumberGuessingGame.html" target="_blank">
-                                    <img src="./images/number.png" alt="Game 5">
-                                    <h3>NumberGuessing</h3>
-                                    <p>By STANNco</p>
-                                </a>
-                            </div>
-                            <!-- 遊戲6 -->
-                            <div class="exhibit-item" data-tags="all,adventure">
-                                <a href="./games/ReactionTime.html" target="_blank">
-                                    <img src="./images/ReactionTime.png" alt="Game 6">
-                                    <h3>ReactionTime</h3>
-                                    <p>By crow-seeds</p>
-                                </a>
-                            </div>
-                            <!-- 遊戲7 -->
-                            <div class="exhibit-item" data-tags="all,adventure">
-                                <a href="./games/Snake.html" target="_blank">
-                                    <img src="./images/Snake.png" alt="Game 7">
-                                    <h3>Snake</h3>
-                                    <p>By PukeBomb</p>
-                                </a>
-                            </div>
-                            <!-- 遊戲8 -->
-                            <div class="exhibit-item" data-tags="all,adventure">
-                                <a href="./games/TypingSpeed.html" target="_blank">
-                                    <img src="./images/TypingSpeed.png" alt="Game 8">
-                                    <h3>TypingSpeed</h3>
-                                    <p>By jacklehamster</p>
-                                </a>
-                            </div>
-                            <!-- 遊戲9 -->
-                            <div class="exhibit-item" data-tags="all,adventure">
-                                <a href="./games/1a2b.html" target="_blank">
-                                    <img src="./images/TypingSpeed.png" alt="Game 8">
-                                    <h3>1a2b</h3>
-                                    <p>By jacklehamster</p>
-                                </a>
-                            </div>
-                            <!-- ----------------------------------- -->
-
-                        </div>
+                        <!-- 腳本加載篩選器 -->
+                        <div id="filter-container" class="filter-options"></div>
+                        <!-- 腳本加載遊戲展示區 -->
+                        <div id="game-container" class="exhibit-grid"></div>
 
                     </section>
                     <!-- 工具展示區 -->
@@ -235,21 +148,10 @@
                     <!-- 音樂展示區 -->
                     <section class="featured-music">
                         <h2>Featured Music</h2>
-
-                        <div class="filter-options">
-                            <span>
-                                Category:
-                                <select id="music-tag-filter">
-                                    <option value="All">All</option>
-                                    <option value="Beat">Beat</option>
-                                    <option value="Pop">Pop</option>
-                                    <option value="Epic">Epic</option>
-                                    <option value="Lively">Lively</option>
-                                </select>
-                            </span>
-                        </div>
-                        <!-- 音樂頁(腳本生成) -->
-                        <div id="music-container"></div>
+                        <!-- 腳本加載篩選器 -->
+                        <div id="music-filter-container" class="filter-options"></div>
+                        <!-- 腳本加載音樂頁 -->
+                        <div id="music-container" class="exhibit-grid"></div>
 
 
                         <!--- ----------------------------------- -->
@@ -267,12 +169,12 @@
     <script src="./Js/loadFooterInfo.js"></script>
     <!-- 構建音樂下載頁 -->
     <script src="./Js/createMusicPageAndDownload.js"></script>
+    <!-- 構建遊戲頁 -->
+    <script src="./Js/createGamePage.js"></script>
     <!-- 遊戲預玩區 -->
     <script src="./Js/prePlayGame.js"></script>
     <!-- 主標籤切換 -->
     <script src="./Js/TagChange.js"></script>
-    <!-- 類型篩選 -->
-    <script src="./Js/tagFilter.js"></script>
     <!-- 按鈕特效 -->
     <script src="./Js/brokenPicesEffect.js"></script>
     <!-- 音樂下載反饋 -->

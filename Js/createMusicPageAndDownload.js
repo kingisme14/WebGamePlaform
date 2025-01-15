@@ -1,3 +1,11 @@
+// 音樂篩選器數據
+const musicFilterOptions = [
+    { value: "All", label: "All" },
+    { value: "Beat", label: "Beat" },
+    { value: "Pop", label: "Pop" },
+    { value: "Epic", label: "Epic" },
+    { value: "Lively", label: "Lively" }
+];
 // 音樂卡片數據陣列
 const musicCards = [
     {
@@ -79,7 +87,6 @@ const musicCards = [
     }
 ];
 
-// 函數：生成音樂卡片
 function createMusicCard(containerId, { title, videoSrc, audioSrc, author, tag }) {
     const container = document.getElementById(containerId);
 
@@ -99,11 +106,7 @@ function createMusicCard(containerId, { title, videoSrc, audioSrc, author, tag }
     iframe.src = videoSrc;
     iframe.title = 'YouTube video player';
     iframe.frameBorder = '0';
-    iframe.setAttribute(
-        'allow',
-        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-    );
-    iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
     iframe.allowFullscreen = true;
 
     // 添加 iframe 到 video-container
@@ -123,28 +126,16 @@ function createMusicCard(containerId, { title, videoSrc, audioSrc, author, tag }
     button.textContent = 'Download Audio';
     button.onclick = (event) => downloadAudio(event, audioSrc, title);
 
-    // 創建反饋訊息
-    const feedbackMessage = document.createElement('span');
-    feedbackMessage.className = 'feedback-message';
-    feedbackMessage.style.display = 'none';
-    feedbackMessage.style.color = 'green';
-    feedbackMessage.style.fontSize = '0.9em';
-    feedbackMessage.style.marginTop = '5px';
-    feedbackMessage.textContent = 'Download started!';
-
     // 將所有元素添加到 exhibit-item
     exhibitItem.appendChild(videoContainer);
     exhibitItem.appendChild(h3);
     exhibitItem.appendChild(p);
     exhibitItem.appendChild(button);
-    exhibitItem.appendChild(feedbackMessage);
 
-    // 將 exhibit-item 添加到容器
+    // 添加 exhibit-item 到容器
     container.appendChild(exhibitItem);
 }
 
-// 迴圈生成所有音樂卡片
-musicCards.forEach((cardData) => createMusicCard('music-container', cardData));
 
 // 音樂下載功能
 function downloadAudio(event, fileUrl, fileName) {
@@ -156,3 +147,78 @@ function downloadAudio(event, fileUrl, fileName) {
     link.click(); // 模擬點擊下載
     document.body.removeChild(link); // 下載後移除元素
 }
+function createMusicFilter(containerId, options) {
+    const container = document.getElementById(containerId);
+
+    // 創建 <span>
+    const span = document.createElement('span');
+    span.textContent = 'Category: ';
+
+    // 創建 <select>
+    const select = document.createElement('select');
+    select.id = 'music-tag-filter';
+
+    // 生成選項
+    options.forEach(({ value, label }) => {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = label;
+        if (value === "Epic") option.selected = true; // 預設選中 "Epic"
+        select.appendChild(option);
+    });
+
+    // 添加到篩選器容器
+    span.appendChild(select);
+    container.appendChild(span);
+}
+//篩選功能
+function filterMusicCards() {
+    const selectedTag = document.getElementById('music-tag-filter').value;
+    const musicItems = document.querySelectorAll('#music-container .exhibit-item'); // 只選擇音樂容器內的卡片
+
+    musicItems.forEach((item) => {
+        const tagsAttr = item.getAttribute('data-tags');
+        if (!tagsAttr) return;
+        const tags = tagsAttr.split(',');
+        if (selectedTag === 'All' || tags.includes(selectedTag)) {
+            item.style.display = 'block';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+
+
+//初始化：生成篩選器與音樂卡片
+let isMusicCardsGenerated = false;  // 記錄音樂卡片是否已生成過
+
+document.addEventListener('DOMContentLoaded', () => {
+    // 確保篩選器的元素已經被加載
+
+    // 如果卡片還沒有生成過，則生成篩選器和卡片
+    if (!isMusicCardsGenerated) {
+        // 生成篩選器
+        createMusicFilter('music-filter-container', musicFilterOptions);
+
+        // 生成音樂卡片
+        musicCards.forEach((cardData) => createMusicCard('music-container', cardData));
+
+        // 記錄卡片已生成過
+        isMusicCardsGenerated = true;
+    }
+
+    
+
+    // 重新設置篩選器選擇，這裡設定為 "Epic"（您可以設定為其他值）
+    const filterSelect = document.getElementById('music-tag-filter');
+    filterSelect.value = 'Epic';
+
+    // 綁定篩選事件
+    filterSelect.addEventListener('change', filterMusicCards);
+
+
+    // 進行初始篩選
+    filterMusicCards();
+});
+
+

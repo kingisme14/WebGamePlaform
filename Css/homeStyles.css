@@ -138,7 +138,7 @@ body {
 }
 
 /* 展示格子區域 */
-#music-container {
+#music-container, #game-container{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
