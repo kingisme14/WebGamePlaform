@@ -10,14 +10,14 @@ const musicFilterOptions = [
 const musicCards = [
     {
         title: "Beat1",
-        videoSrc: "https://www.youtube.com/embed/r50UEk1-J-I?si=utP21aByPajRAUrk",
+        videoSrc: "https://www.youtube.com/embed/VQe3Tw5-ZcI?si=8Szasm7n_CmERyk0",//ok
         audioSrc: "./audio/beat1.mp3",
         author: "jacklehamster",
-        tag: "All,Beat"
+        tag: "All,Beat,Lively"
     },
     {
         title: "Epic1",
-        videoSrc: "https://www.youtube.com/embed/Zi_XLOBDo_Y",
+        videoSrc: "https://www.youtube.com/embed/S3_F2MeuIDo?si=sIEKfWLLuGK9Mbc8",//ok
         audioSrc: "./audio/epic1.mp3",
         author: "epiccomposer",
         tag: "All,Epic"
@@ -38,7 +38,7 @@ const musicCards = [
     },
     {
         title: "Epic2",
-        videoSrc: "https://www.youtube.com/embed/Zi_XLOBDo_Y",
+        videoSrc: "https://www.youtube.com/embed/VnxblfWOOtA?si=VkzeCRUpoV5KzG_3",//ok
         audioSrc: "./audio/epic2.mp3",
         author: "epiccomposer",
         tag: "All,Epic"
@@ -52,7 +52,7 @@ const musicCards = [
     },
     {
         title: "Epic3",
-        videoSrc: "https://www.youtube.com/embed/Zi_XLOBDo_Y",
+        videoSrc: "https://www.youtube.com/embed/KRVYmMc8UYg?si=fDQQk5B8tP_4fDzA",//ok
         audioSrc: "./audio/epic3.mp3",
         author: "epiccomposer",
         tag: "All,Epic"
@@ -73,7 +73,7 @@ const musicCards = [
     },
     {
         title: "Epic4",
-        videoSrc: "https://www.youtube.com/embed/Zi_XLOBDo_Y",
+        videoSrc: "https://www.youtube.com/embed/ZBhU4n29aUQ?si=UJgJyANb2-s_CB7G",//ok
         audioSrc: "./audio/epic4.mp3",
         author: "epiccomposer",
         tag: "All,Epic"
